@@ -20,8 +20,25 @@ def create_menu_inline() -> InlineKeyboardMarkup:
     kb_builder.row(*buttons, width=2)
     return kb_builder.as_markup()
 
+
 def create_menu_translate() -> InlineKeyboardMarkup:
     kb_builder = InlineKeyboardBuilder()
-    buttons = [InlineKeyboardButton(text=value, callback_data=key, style='danger') for key, value in LEXICON['keyboard_translate'].items()]
+    buttons = [InlineKeyboardButton(text=value, callback_data=key, style='danger') for key, value in
+               LEXICON['keyboard_translate'].items()]
     kb_builder.row(*buttons, width=2)
     return kb_builder.as_markup()
+
+
+def create_menu_resume() -> InlineKeyboardMarkup:
+    kb_builder = InlineKeyboardBuilder()
+    buttons = [InlineKeyboardButton(text=value[0], callback_data=key, style=value[1]) for key, value in
+               LEXICON['keyboard_resume'].items()]
+    kb_builder.row(*buttons, width=1)
+    return kb_builder.as_markup()
+
+def create_menu_stop() -> InlineKeyboardMarkup:
+    return InlineKeyboardMarkup(
+        inline_keyboard=[
+            [InlineKeyboardButton(text='⛔️ Закончить', callback_data='stop')],
+        ]
+    )

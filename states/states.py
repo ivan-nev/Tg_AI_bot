@@ -7,3 +7,4 @@ class RegisterProfile(StatesGroup):
     qwiz = State()
     translate = State()
     set_system = State()
+    resume = State()

@@ -1,5 +1,6 @@
 from aiogram import Bot, Dispatcher
 import asyncio
+from aiogram.client.default import DefaultBotProperties
 from config import load_config
 from handlers import router
 from keyboards import set_main_menu
@@ -8,12 +9,12 @@ from middlewares import AIClientMiddleware, ThrottlingMiddleware
 
 config = load_config()
 deepseek = AI(api_key=config.ai.api_key, base_url=config.ai.base_url, model=config.ai.model)
-bot = Bot(token=config.tg_bot.token)
+bot = Bot(token=config.tg_bot.token, default=DefaultBotProperties(parse_mode='HTML'))
 
 dp = Dispatcher()
 dp.include_router(router)
 
-dp.update.middleware(ThrottlingMiddleware())
+# dp.update.middleware(ThrottlingMiddleware())
 dp.update.middleware(AIClientMiddleware(ai_client=deepseek))
 
 async def main():

@@ -3,7 +3,7 @@ from aiogram.filters import CommandStart, Command
 from aiogram.types import Message
 from aiogram.fsm.context import FSMContext
 from states.states import RegisterProfile
-# from utils.deepseek import deepseek
+from utils import AI
 from keyboards import create_menu_inline
 
 router = Router()
@@ -20,15 +20,15 @@ async def set_system(message: Message, state: FSMContext):
     await message.answer(text='напиши системный промт')
     await state.set_state(RegisterProfile.set_system)
 
-# @router.message(F.text, RegisterProfile.set_system)
-# async def get_system(message: Message, state: FSMContext):
-#     await deepseek.set_system_prompt(message.text, state)
-#     await message.answer(text='системный промт установлен')
-#     await state.set_state(None)
+@router.message(F.text, RegisterProfile.set_system)
+async def get_system(message: Message, state: FSMContext, ai_client: AI):
+    await ai_client.set_system_prompt(message.text, state)
+    await message.answer(text='системный промт установлен')
+    await state.set_state(RegisterProfile.gpt)
 
-# @router.message(F.text)
-# async def get_text(message: Message, state: FSMContext):
-#     answer = await deepseek.get_answer(message.text, state)
+# @router.message(F.text, RegisterProfile.gpt)
+# async def get_text(message: Message, state: FSMContext, ai_client: AI):
+#     answer = await ai_client.get_answer(message.text, state)
 #     await message.answer(text=answer)
 
 
