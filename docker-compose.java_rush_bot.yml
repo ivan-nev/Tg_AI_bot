@@ -16,11 +16,10 @@ services:
       - ${WEBHOOK_PORT}
     labels:
       - "traefik.enable=true"
-      # Используем переменную BOT_DOMAIN для правила маршрутизации
-      - "traefik.http.routers.bot.rule=Host(`${BOT_DOMAIN}`)"
-      - "traefik.http.routers.bot.entrypoints=websecure"
-      - "traefik.http.routers.bot.tls.certresolver=le"
-      - "traefik.http.services.bot.loadbalancer.server.port=${WEBHOOK_PORT}"
+      - "traefik.http.routers.javarush-bot.rule=Host(`${BOT_DOMAIN}`)"
+      - "traefik.http.routers.javarush-bot.entrypoints=websecure"
+      - "traefik.http.routers.javarush-bot.tls.certresolver=le"
+      - "traefik.http.services.javarush-bot.loadbalancer.server.port=${WEBHOOK_PORT}"
 
 networks:
   traefik_proxy-network:
