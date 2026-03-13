@@ -13,7 +13,7 @@ services:
     networks:
       - traefik_proxy-network
     expose:
-      - PORT
+      - ${WEBHOOK_PORT}
     labels:
       - "traefik.enable=true"
       # Используем переменную BOT_DOMAIN для правила маршрутизации
