@@ -1,18 +1,17 @@
 from aiogram import Router, F
-from aiogram.filters import CommandStart, Command
-from aiogram.types import Message, ReplyKeyboardRemove, CallbackQuery, FSInputFile
+from aiogram.types import Message, CallbackQuery, FSInputFile
 from aiogram.fsm.context import FSMContext
 from aiogram.enums import ChatAction
-from states.states import RegisterProfile
+from states.states import Profile
 from utils import AI
-from keyboards import create_menu_inline, create_menu_translate, create_menu_stop
+from keyboards import create_menu_inline, create_menu_stop
 
 router = Router()
 
 
 @router.callback_query(F.data == "chatgpt")
 async def chatgpt_handler(callback: CallbackQuery, state: FSMContext, ai_client: AI):
-    await state.set_state(RegisterProfile.gpt)
+    await state.set_state(Profile.gpt)
     await callback.answer()
     text = await callback.message.edit_text(text="минуточку...", action=ChatAction.TYPING)
     try:
@@ -23,7 +22,7 @@ async def chatgpt_handler(callback: CallbackQuery, state: FSMContext, ai_client:
             'Контекст диалога сохраняется'
             'Нажми <b>Закончить</b> чтобы выйти'
         ), reply_markup=create_menu_stop())
-    except Exception as e:
+    except Exception:
         await callback.message.answer(text=('<b>Режим ChatGPT</b>\n\n'
                                             'Напиши любой вопрос - я отвечу'
                                             'Контекст диалога сохраняется'
@@ -33,11 +32,13 @@ async def chatgpt_handler(callback: CallbackQuery, state: FSMContext, ai_client:
     await ai_client.set_system_prompt(system_message, state)
     await text.delete()
 
-@router.message(F.text, RegisterProfile.gpt)
+
+@router.message(F.text, Profile.gpt)
 async def gpt_handler(message: Message, state: FSMContext, ai_client: AI):
     text = await message.answer(text="Ожидайте ответа...", action=ChatAction.TYPING)
     ai_answer = await ai_client.get_answer(message.text, state)
     await text.edit_text(text=ai_answer, reply_markup=create_menu_stop())
+
 
 @router.callback_query(F.data == "stop")
 async def stop_handler(callback: CallbackQuery, state: FSMContext):

@@ -7,7 +7,7 @@ LEXICON = {
     'inline_menu': {
         'random_fact': '💡 Рандомный факт',
         'chatgpt': '🤖 ChatGPT',
-        'chat': '💭 Диалог',
+        'dialog': '💭 Диалог',
         'quiz': '🎯 Квиз',
         'translate': '🔤 Переводчик',
         'resume': '📋 Резюме'
@@ -17,12 +17,17 @@ LEXICON = {
         'stop': '🛑 Закончить',
     },
     'keyboard_talk': {
-        'Pushkin': '📜 А.С.Пушкин',
-        'Lermontov': '🎭 М.Лермонтов',
-        'Newton': '🍎 И.Ньютон',
-        'Mendeleev': '⚗️ М.Менделеев',
-        'Lenin': '🚩 Л.Ленин',
+        'Pushkin-personality': '📜 А.С.Пушкин',
+        'Lermontov-personality': '🎭 М.Лермонтов',
+        'Newton-personality': '🍎 И.Ньютон',
+        'Mendeleev-personality': '⚗️ М.Менделеев',
+        'Lenin-personality': '🚩 В.Ленин',
+        'Einstein-personality': '🧪 А.Эйнштейн',
         'stop': '🛑 Закончить',
+    },
+    'keyboard_talk_menu': {
+        'change': '🔄 Сменить личность',
+        'stop': '🛑 Закончить'
     },
     'keyboard_translate': {
         # 'english': '🇬🇧 Английский',

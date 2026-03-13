@@ -1,6 +1,6 @@
 from aiogram.fsm.state import StatesGroup, State
 
-class RegisterProfile(StatesGroup):
+class Profile(StatesGroup):
     random = State()
     gpt = State()
     dialog = State()

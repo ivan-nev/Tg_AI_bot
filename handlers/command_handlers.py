@@ -2,7 +2,7 @@ from aiogram import Router, F
 from aiogram.filters import CommandStart, Command
 from aiogram.types import Message
 from aiogram.fsm.context import FSMContext
-from states.states import RegisterProfile
+from states.states import Profile
 from utils import AI
 from keyboards import create_menu_inline
 
@@ -18,13 +18,13 @@ async def start(message: Message, state: FSMContext):
 @router.message(F.text == 'system')
 async def set_system(message: Message, state: FSMContext):
     await message.answer(text='напиши системный промт')
-    await state.set_state(RegisterProfile.set_system)
+    await state.set_state(Profile.set_system)
 
-@router.message(F.text, RegisterProfile.set_system)
+@router.message(F.text, Profile.set_system)
 async def get_system(message: Message, state: FSMContext, ai_client: AI):
     await ai_client.set_system_prompt(message.text, state)
     await message.answer(text='системный промт установлен')
-    await state.set_state(RegisterProfile.gpt)
+    await state.set_state(Profile.gpt)
 
 # @router.message(F.text, RegisterProfile.gpt)
 # async def get_text(message: Message, state: FSMContext, ai_client: AI):

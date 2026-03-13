@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  bot:
+    build: .
+    container_name: java-rush-bot
+    restart: always
+    env_file:
+      - .env
+    environment:
+      - WEBHOOK=True
+      - PORT=${WEBHOOK_PORT}
+    networks:
+      - traefik_proxy-network
+    labels:
+      - "traefik.enable=true"
+      # Используем переменную BOT_DOMAIN для правила маршрутизации
+      - "traefik.http.routers.bot.rule=Host(`${BOT_DOMAIN}`)"
+      - "traefik.http.routers.bot.entrypoints=websecure"
+      - "traefik.http.routers.bot.tls.certresolver=le"
+      - "traefik.http.services.bot.loadbalancer.server.port=${WEBHOOK_PORT}"
+
+networks:
+  traefik_proxy-network:
+    external: true
+    name: traefik_proxy-network

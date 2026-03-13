@@ -1,7 +1,7 @@
 from aiogram import Router, F
 from aiogram.types import Message, CallbackQuery
 from aiogram.fsm.context import FSMContext
-from states.states import RegisterProfile
+from states.states import Profile
 from utils import AI
 from keyboards import create_menu_inline, create_menu_resume
 
@@ -9,7 +9,7 @@ router = Router()
 
 @router.callback_query(F.data == "resume")
 async def resume_start(callback: CallbackQuery, state: FSMContext, ai_client: AI):
-    await state.set_state(RegisterProfile.resume)
+    await state.set_state(Profile.resume)
     await callback.answer()
     say = await callback.message.edit_text('Минуточку, обрабатываю...')
     with open("resources/prompts/resume.txt", "r", encoding='utf-8') as f:
@@ -18,7 +18,7 @@ async def resume_start(callback: CallbackQuery, state: FSMContext, ai_client: AI
     ai_answer = await ai_client.get_answer("", state)
     await say.edit_text(ai_answer, reply_markup=create_menu_resume())
 
-@router.callback_query(F.data == 'next', RegisterProfile.resume)
+@router.callback_query(F.data == 'next', Profile.resume)
 async def resume_next(callback: CallbackQuery, state: FSMContext, ai_client: AI):
     await callback.answer()
     say = await callback.message.answer('Минуточку, обрабатываю...')
@@ -30,7 +30,7 @@ async def resume_next(callback: CallbackQuery, state: FSMContext, ai_client: AI)
     else:
         await say.edit_text(ai_answer, reply_markup=create_menu_resume())
 
-@router.callback_query(F.data == 'stop', RegisterProfile.resume)
+@router.callback_query(F.data == 'stop', Profile.resume)
 async def resume_stop(callback: CallbackQuery, state: FSMContext, ai_client: AI):
     await callback.answer()
     say = await callback.message.answer('Минуточку, обрабатываю...')
@@ -38,7 +38,7 @@ async def resume_stop(callback: CallbackQuery, state: FSMContext, ai_client: AI)
     await state.clear()
     await say.edit_text(ai_answer, reply_markup=create_menu_inline())
 
-@router.message(F.text, RegisterProfile.resume)
+@router.message(F.text, Profile.resume)
 async def resume_text(message: Message, state: FSMContext, ai_client: AI):
     say = await message.answer('Минуточку, обрабатываю...')
     ai_answer = await ai_client.get_answer(message.text, state)
