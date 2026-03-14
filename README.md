@@ -31,6 +31,7 @@ Telegram-бот, созданный с использованием `aiogram 3`,
 2. Создайте `.env` файл:
    ```env
    BOT_TOKEN=ваш_токен_от_BotFather
+   ADMIN_ID=ваш_telegram_id
    WEBHOOK_PORT=8000
    BOT_DOMAIN=bot.yourdomain.com
    AI_API_KEY=ваш_api_ключ
@@ -57,6 +58,7 @@ Telegram-бот, созданный с использованием `aiogram 3`,
 | Переменная        | Описание |
 |-------------------|--------|
 | `BOT_TOKEN`       | Токен от @BotFather |
+| `ADMIN_ID`        | ID администратора бота |
 | `WEBHOOK_PORT`    | Порт, на котором слушает бот (например, 8000) |
 | `BOT_DOMAIN`      | Домен, например `bot.example.com` |
 | `AI_API_KEY`      | Ключ для доступа к ИИ (DeepSeek, OpenAI и т.п.) |

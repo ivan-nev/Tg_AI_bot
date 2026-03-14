@@ -10,6 +10,7 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(level
 class TgBot:
     token: str
     webhook_url: str
+    admin_id: int
 
 
 @dataclass
@@ -31,7 +32,7 @@ def load_config(path: str | None = None) -> Config:
     #     logging.info('Запуск вне контейнера')
     env = Env()
     env.read_env(path)
-    return Config(tg_bot=TgBot(token=env('BOT_TOKEN'), webhook_url=env('WEBHOOK_URL')),
+    return Config(tg_bot=TgBot(token=env('BOT_TOKEN'), webhook_url=env('WEBHOOK_URL'), admin_id=env.int('ADMIN_ID')),
                   ai=AI(api_key=env('AI_TOKEN'), base_url=env('AI_BASE_URL'), model=env('AI_MODEL')))
 
 

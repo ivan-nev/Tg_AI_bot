@@ -22,6 +22,7 @@ bot = Bot(token=config.tg_bot.token, default=DefaultBotProperties(parse_mode='HT
 
 # Диспетчер и middleware
 dp = Dispatcher()
+dp.workflow_data['admin_id'] = config.tg_bot.admin_id
 dp.include_router(router)
 # dp.update.middleware(ThrottlingMiddleware())
 dp.update.middleware(AIClientMiddleware(ai_client=deepseek))

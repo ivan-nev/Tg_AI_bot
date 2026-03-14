@@ -1,4 +1,5 @@
 from aiogram import Router, F
+from aiogram import Bot
 from aiogram.filters import CommandStart, Command
 from aiogram.types import Message
 from aiogram.fsm.context import FSMContext
@@ -8,12 +9,16 @@ from keyboards import create_menu_inline
 
 router = Router()
 
+
 @router.message(CommandStart())
-async def start(message: Message, state: FSMContext):
+async def start(message: Message, state: FSMContext, bot: Bot, admin_id: int):
     start_text = '''Привет! Я бот, твой помощник.
     Выбери тему из меню'''
     await message.answer(text=start_text, reply_markup=create_menu_inline())
+    await bot.send_message(chat_id=admin_id,
+                           text=f"Пользователь {message.from_user.full_name} ID: {message.from_user.id} начал диалог")
     await state.clear()
+
 
 @router.message(Command('about'))
 async def about(message: Message):
@@ -30,8 +35,10 @@ async def about(message: Message):
         "• 📋 Помогать составлять резюме\n\n"
         "Создан с ❤️ для любознательных и активных.\n"
         "Погружайся — будет интересно! 🚀\n"
+        "Вопросы - @Ivan_n07\n"
         "/start - Начать диалог\n"
     ))
+
 
 @router.message(Command('help'))
 async def help_handler(message: Message):
