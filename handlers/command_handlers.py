@@ -15,40 +15,32 @@ async def start(message: Message, state: FSMContext):
     await message.answer(text=start_text, reply_markup=create_menu_inline())
     await state.clear()
 
-@router.message(F.text == 'system')
-async def set_system(message: Message, state: FSMContext):
-    await message.answer(text='напиши системный промт')
-    await state.set_state(Profile.set_system)
+@router.message(Command('about'))
+async def about(message: Message):
+    await message.answer(text=(
+        "🤖 <b>О боте</b>\n\n"
+        "Этот бот — твой умный и остроумный собеседник, "
+        "помощник и развлечение в одном лице! 🎯\n\n"
+        "Вот что он умеет:\n"
+        "• 💡 Рассказывать рандомные факты\n"
+        "• 🤖 Общаться через ChatGPT\n"
+        "• 💬 Вести диалог от лица знаменитостей\n"
+        "• 🎯 Проводить квизы по разным темам\n"
+        "• 🔤 Переводить тексты\n"
+        "• 📋 Помогать составлять резюме\n\n"
+        "Создан с ❤️ для любознательных и активных.\n"
+        "Погружайся — будет интересно! 🚀\n"
+        "/start - Начать диалог\n"
+    ))
 
-@router.message(F.text, Profile.set_system)
-async def get_system(message: Message, state: FSMContext, ai_client: AI):
-    await ai_client.set_system_prompt(message.text, state)
-    await message.answer(text='системный промт установлен')
-    await state.set_state(Profile.gpt)
-
-# @router.message(F.text, RegisterProfile.gpt)
-# async def get_text(message: Message, state: FSMContext, ai_client: AI):
-#     answer = await ai_client.get_answer(message.text, state)
-#     await message.answer(text=answer)
-
-
-# @router.message(F.text, RegisterProfile.waiting_name)
-# async def get_name(message: Message, state: FSMContext):
-#     await state.update_data(name=message.text)
-#     await message.answer(f'Привет {message.text}\n'
-#                          f'Шаг 2 из 3 - Сколько тебе лет?')
-#     await state.set_state(RegisterProfile.waiting_age)
-#
-# @router.message(F.text, RegisterProfile.waiting_age)
-# async def get_name(message: Message, state: FSMContext):
-#     await state.update_data(age=message.text)
-#     await message.answer(f'Шаг 3 из 3 - Какой твой город?')
-#     await state.set_state(RegisterProfile.waiting_city)
-#
-#
-# @router.message(F.text, RegisterProfile.waiting_city)
-# async def get_name(message: Message, state: FSMContext):
-#     await state.update_data(city=message.text)
-#     data = await state.get_data()
-#     await message.answer(f'Спасибо, твои данные:\n {data}!\n')
-#     await state.set_state(None)
+@router.message(Command('help'))
+async def help_handler(message: Message):
+    help_text = (
+        "📘 <b>Справка по командам</b>\n\n"
+        "/start — Запустить бота\n"
+        "/help — Показать эту подсказку\n"
+        "/about — Узнать больше о боте\n\n"
+        "Используй меню для навигации — "
+        "там ты найдёшь все доступные функции! 💡"
+    )
+    await message.answer(help_text)

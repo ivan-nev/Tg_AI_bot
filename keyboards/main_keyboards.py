@@ -60,3 +60,15 @@ def create_menu_talk() -> InlineKeyboardMarkup:
     buttons = [InlineKeyboardButton(text=value, callback_data=key) for key, value in LEXICON['keyboard_talk_menu'].items()]
     kb_builder.row(*buttons, width=2)
     return kb_builder.as_markup()
+
+def create_menu_quiz() -> InlineKeyboardMarkup:
+    kb_builder = InlineKeyboardBuilder()
+    buttons = [InlineKeyboardButton(text=value, callback_data=key) for key, value in LEXICON['keyboard_quiz'].items()]
+    kb_builder.row(*buttons, width=2)
+    return kb_builder.as_markup()
+
+def create_menu_quiz_menu() -> InlineKeyboardMarkup:
+    kb_builder = InlineKeyboardBuilder()
+    buttons = [InlineKeyboardButton(text=value, callback_data=key) for key, value in LEXICON['keyboard_quiz_menu'].items()]
+    kb_builder.row(*buttons, width=2)
+    return kb_builder.as_markup()

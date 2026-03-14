@@ -79,6 +79,7 @@ async def main() -> None:
             await bot.delete_webhook()
     else:
         # Режим polling
+        await bot.delete_webhook()
         await set_main_menu(bot)
         await dp.start_polling(bot)
 

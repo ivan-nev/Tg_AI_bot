@@ -39,5 +39,20 @@ LEXICON = {
     'keyboard_resume': {
         'next': ['⏭️ Пропустить вопрос', 'success'],
         'stop': ['🛑 Закончить вопросы', 'primary']
-    }
+    },
+    'keyboard_quiz': {
+        'science-quiz': '🔬 Наука и технологии',
+        'history-quiz': '📜 Исторические баталии',
+        'movies-quiz': '🎬 Киноман-эксперт',
+        'games-quiz': '🎮 Геймер на максималке',
+        'music-quiz': '🎧 Музыкальный сноб',
+        'mythology-quiz': '⚔️ Боги и мифы',
+        'space-quiz': '🚀 Космос: бесконечность',
+        'literature-quiz': '📚 Литературные дуэли',
+        'stop': '🛑 Закончить'
+    },
+    'keyboard_quiz_menu': {
+        'change_quiz': '🔄 Сменить тему',
+        'stop_quiz': '🛑 Закончить'
+    },
 }

@@ -18,8 +18,8 @@ async def chatgpt_handler(callback: CallbackQuery, state: FSMContext, ai_client:
         photo = FSInputFile("resources/images/gpt.png")
         await callback.message.answer_photo(photo=photo, caption=(
             '<b>Режим ChatGPT</b>\n\n'
-            'Напиши любой вопрос - я отвечу'
-            'Контекст диалога сохраняется'
+            'Напиши любой вопрос - я отвечу.\n'
+            'Контекст диалога сохраняется.\n'
             'Нажми <b>Закончить</b> чтобы выйти'
         ), reply_markup=create_menu_stop())
     except Exception:

@@ -13,7 +13,7 @@ async def translate(callback: CallbackQuery, state: FSMContext, ai_client: AI):
     with open("resources/prompts/translate.txt", "r", encoding='utf-8') as f:
         system_prompt = f.read()
     await ai_client.set_system_prompt(system_prompt, state)
-    await callback.message.edit_text("Введите текст для перевода", reply_markup=create_menu_translate())
+    await callback.message.edit_text("Напиши текст для перевода", reply_markup=create_menu_translate())
 
 @router.message(F.text, Profile.translate)
 async def translate_text(message: Message, state: FSMContext, ai_client: AI):
