@@ -37,8 +37,9 @@ async def qwiz(call: CallbackQuery, state: FSMContext, ai_client: AI):
 async def qwiz(message: Message, state: FSMContext, ai_client: AI):
     score = (await state.get_data())['score']
     text = await message.answer('Проверяю...', reply_markup=ReplyKeyboardRemove())
+    answer = await ai_client.get_answer(message.text, state)
     try:
-        ai_answer, next_question = (await ai_client.get_answer(message.text, state)).split('@@@')
+        ai_answer, next_question = answer.split('@@@')
         if "✅ Верно" in ai_answer:
             score['right_answers'] += 1
         if "❌ Неверно" in ai_answer:
@@ -49,7 +50,7 @@ async def qwiz(message: Message, state: FSMContext, ai_client: AI):
                              f'{next_question}', reply_markup=create_menu_quiz_menu())
     except Exception:
         await text.delete()
-        await message.answer(f'Странный ответ...', reply_markup=create_menu_quiz_menu())
+        await message.answer(answer, reply_markup=create_menu_quiz_menu())
 
 @router.callback_query(F.data == "stop_quiz", Profile.qwiz)
 async def stop_qwiz(call: CallbackQuery, state: FSMContext):
