@@ -1,6 +1,6 @@
 from aiogram.fsm.context import FSMContext
 from openai import AsyncOpenAI
-
+from random import randint
 
 
 class AI:
@@ -12,16 +12,11 @@ class AI:
         messages = [{'role': 'system', 'content': prompt}]
         await state.update_data(messages=messages)
 
-    async def get_answer(self, message:str, state: FSMContext):
+    async def get_answer(self, message: str, state: FSMContext):
         messages = (await state.get_data())['messages'] + [{'role': 'user', 'content': message}]
         while len(messages) > 20:
             messages.pop(1)
-        response = await self.client.chat.completions.create(messages=messages, model=self.model)
+        response = await self.client.chat.completions.create(messages=messages, model=self.model, temperature=0.9,
+                                                             seed=randint(1, 10000))
         await state.update_data(messages=messages + [response.choices[0].message])
         return response.choices[0].message.content
-
-
-
-
-
-
